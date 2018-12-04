@@ -32,22 +32,31 @@ console.log(`Frequency: ${frequency}`);
 // Declare current frequency variable;
 // Declare array for previously visited frequencies
 // Declare array for storing duplicate frequencies
+// Declare boolean to track whether duplicate found
 let currentFrequency = 0;
 let prevFreq = [];
 let duplicateFrequencies = [];
+let duplicateFound = false;
 
-// Map over inputArray to find all frequencies visited
-let frequencies = inputArray.map(frequency => {
-  return (currentFrequency += frequency);
-});
+// Create function to map over inputArray to find all frequencies visited
+const calcFrequencies = () => {
+  let frequencies = inputArray.map(frequency => {
+    return (currentFrequency += frequency);
+  });
 
-for (let freq of frequencies) {
-  if (!prevFreq.includes(freq)) {
-    prevFreq.push(freq);
-  } else {
-    duplicateFrequencies.push(freq);
+  return frequencies;
+};
+
+while (!duplicateFound) {
+  let freq = calcFrequencies();
+  for (let f of freq) {
+    if (!prevFreq.includes(f)) {
+      prevFreq.push(f);
+    } else {
+      duplicateFrequencies.push(f);
+      duplicateFound = true;
+    }
   }
 }
 
-console.log(`Previous: ${prevFreq}`);
-console.log(`Duplicate: ${duplicateFrequencies}`);
+console.log(`Duplicate: ${duplicateFrequencies[0]}`);
